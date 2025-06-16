@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celestia Media Hub - Premium Media Production</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a2332 0%, #0f1419 100%);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled .nav-links {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: block;
+        }
+
+        .navbar.scrolled .nav-links a {
+            color: #333;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .navbar.scrolled .nav-links a:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 25px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-links a:hover::before {
+            opacity: 0.1;
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .nav-links a.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            filter: brightness(0.4); /* makes text readable */
+        }
+
+        /* .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+                        url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            opacity: 1;
+            z-index: -1;
+        } */
+
+/* 
+            .portfolio-item {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px) scale(1.03);
+        } */
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #d4af37, #f1c40f);
+            color: #1a2332;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, #f1c40f, #d4af37);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: #5d6d7e;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(44, 62, 80, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(241, 196, 15, 0.1));
+            transition: left 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            left: 0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(44, 62, 80, 0.15);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #d4af37, #f1c40f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: #1a2332;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .service-card p {
+            color: #5d6d7e;
+            line-height: 1.8;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1a2332 0%, #2c3e50 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(212,175,55,0.05)"/><circle cx="80" cy="40" r="1" fill="rgba(212,175,55,0.03)"/><circle cx="40" cy="80" r="1" fill="rgba(212,175,55,0.04)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .gallery .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .gallery .section-title h2 {
+            color: #f8f9fa;
+            background: none;
+            -webkit-text-fill-color: #f8f9fa;
+        }
+
+        .gallery .section-title p {
+            color: rgba(248, 249, 250, 0.8);
+        }
+
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            color: #f8f9fa;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, #d4af37, #f1c40f);
+            border-color: #d4af37;
+            color: #1a2332;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 300px;
+            cursor: pointer;
+            transform: translateY(0);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.9), rgba(241, 196, 15, 0.9));
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #1a2332;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            transform: translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+            font-weight: 600;
+        }
+
+        .gallery-overlay p {
+            font-size: 1rem;
+            opacity: 0.8;
+            transform: translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+
+        .gallery-item:hover .gallery-overlay h4,
+        .gallery-item:hover .gallery-overlay p {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay .view-btn {
+            margin-top: 1rem;
+            padding: 8px 20px;
+            background: rgba(26, 35, 50, 0.3);
+            border: 2px solid rgba(26, 35, 50, 0.4);
+            color: #1a2332;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gallery-item:hover .gallery-overlay .view-btn {
+            transform: translateY(0);
+        }
+
+        .view-btn:hover {
+            background: rgba(26, 35, 50, 0.5);
+            border-color: rgba(26, 35, 50, 0.6);
+            transform: translateY(-2px);
+        }
+            z-index: 1;
+        }
+
+        .gallery .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .gallery .section-title h2 {
+            color: white;
+            background: none;
+            -webkit-text-fill-color: white;
+        }
+
+        .gallery .section-title p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 300px;
+            cursor: pointer;
+            transform: translateY(0);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            transform: translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+        }
+
+        .gallery-overlay p {
+            font-size: 1rem;
+            opacity: 0.9;
+            transform: translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+
+        .gallery-item:hover .gallery-overlay h4,
+        .gallery-item:hover .gallery-overlay p {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay .view-btn {
+            margin-top: 1rem;
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gallery-item:hover .gallery-overlay .view-btn {
+            transform: translateY(0);
+        }
+
+        .view-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Portfolio Section */
+            .portfolio {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            height: 250px;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-overlay h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-overlay p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: #5d6d7e;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(44, 62, 80, 0.2);
+            border: 3px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            width: 30px;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        /* Enhanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .pulse-animation {
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        /* Staggered Animation */
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        .stagger-6 { transition-delay: 0.6s; }
+
+        /* Loading Animation */
+        .loading-animation {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .loading-animation:hover::before {
+            left: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                color: #333;
+                cursor: pointer;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">Celestia Media Hub</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- 🔥 Video Background -->
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="hero-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    
+        <div class="hero-content">
+            <h1>Celestia Media Hub</h1>
+            <p>Crafting Visual Stories That Captivate and Inspire</p>
+            <a href="#services" class="cta-button">Explore Our Work</a>
+        </div>
+    </section>
+    
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Our Premium Services</h2>
+                <p>From concept to creation, we deliver exceptional media solutions that elevate your brand and tell your story with unmatched creativity and precision.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in stagger-1 loading-animation">
+                    <div class="service-icon float-animation">🎬</div>
+                    <h3>Video Production</h3>
+                    <p>Professional video creation including commercials, corporate videos, and cinematic storytelling that engages your audience and drives results.</p>
+                </div>
+                <div class="service-card fade-in stagger-2 loading-animation">
+                    <div class="service-icon float-animation">🤖</div>
+                    <h3>AI Video Creation</h3>
+                    <p>Cutting-edge AI-powered video production for innovative content creation, animations, and personalized video experiences.</p>
+                </div>
+                <div class="service-card fade-in stagger-3 loading-animation">
+                    <div class="service-icon float-animation">📱</div>
+                    <h3>Digital Marketing</h3>
+                    <p>Strategic advertising campaigns and promotional content designed to maximize your brand's reach and impact across all digital platforms.</p>
+                </div>
+                <div class="service-card fade-in stagger-4 loading-animation">
+                    <div class="service-icon float-animation">💻</div>
+                    <h3>Website Portfolio</h3>
+                    <p>Custom website design and development that showcases your brand with stunning visuals and seamless user experience.</p>
+                </div>
+                <div class="service-card fade-in stagger-5 loading-animation">
+                    <div class="service-icon float-animation">💍</div>
+                    <h3>Wedding Photography</h3>
+                    <p>Elegant wedding photography and videography services capturing your special moments with artistic flair and timeless beauty.</p>
+                </div>
+                <div class="service-card fade-in stagger-6 loading-animation">
+                    <div class="service-icon float-animation">📸</div>
+                    <h3>Album Design</h3>
+                    <p>Luxury album design and production creating beautiful keepsakes that preserve your precious memories in stunning detail.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Our Featured Work</h2>
+                <p>A showcase of our finest projects, demonstrating our commitment to excellence and creative innovation across all media formats.</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item fade-in">
+                    <img src="/api/placeholder/400/250" alt="Commercial Video">
+                    <div class="portfolio-overlay">
+                        <h4>Brand Commercial</h4>
+                        <p>Luxury Product Campaign</p>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in">
+                    <img src="/api/placeholder/400/250" alt="Wedding Photography">
+                    <div class="portfolio-overlay">
+                        <h4>Wedding Collection</h4>
+                        <p>Romantic Garden Ceremony</p>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in">
+                    <img src="/api/placeholder/400/250" alt="AI Video">
+                    <div class="portfolio-overlay">
+                        <h4>AI Generated Content</h4>
+                        <p>Futuristic Brand Video</p>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in">
+                    <img src="/api/placeholder/400/250" alt="Website Design">
+                    <div class="portfolio-overlay">
+                        <h4>Portfolio Website</h4>
+                        <p>Luxury Brand Showcase</p>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in">
+                    <img src="/api/placeholder/400/250" alt="Corporate Video">
+                    <div class="portfolio-overlay">
+                        <h4>Corporate Profile</h4>
+                        <p>Executive Brand Story</p>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in">
+                    <img src="/api/placeholder/400/250" alt="Album Design">
+                    <div class="portfolio-overlay">
+                        <h4>Wedding Album</h4>
+                        <p>Premium Design Collection</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Our Creative Gallery</h2>
+                <p>Explore our diverse collection of work showcasing the artistry and innovation behind every project we create.</p>
+            </div>
+            
+            <div class="gallery-filter fade-in">
+                <button class="filter-btn active" data-filter="all">All Work</button>
+                <button class="filter-btn" data-filter="videos">Videos</button>
+                <button class="filter-btn" data-filter="photography">Photography</button>
+                <button class="filter-btn" data-filter="ai">AI Content</button>
+                <button class="filter-btn" data-filter="weddings">Weddings</button>
+                <button class="filter-btn" data-filter="commercial">Commercial</button>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item fade-in stagger-1" data-category="videos commercial">
+                    <img src="/api/placeholder/400/300" alt="Corporate Video Production">
+                    <div class="gallery-overlay">
+                        <h4>Corporate Excellence</h4>
+                        <p>Premium Brand Video</p>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in stagger-2" data-category="photography weddings">
+                    <img src="/api/placeholder/400/300" alt="Wedding Photography">
+                    <div class="gallery-overlay">
+                        <h4>Eternal Moments</h4>
+                        <p>Luxury Wedding Collection</p>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in stagger-3" data-category="ai videos">
+                    <img src="/api/placeholder/400/300" alt="AI Generated Content">
+                    <div class="gallery-overlay">
+                        <h4>Future Vision</h4>
+                        <p>AI-Powered Campaign</p>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in stagger-4" data-category="photography commercial">
+                    <img src="/api/placeholder/400/300" alt="Product Photography">
+                    <div class="gallery-overlay">
+                        <h4>Product Excellence</h4>
+                        <p>Commercial Photography</p>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in stagger-5" data-category="videos ai">
+                    <img src="/api/placeholder/400/300" alt="AI Music Video">
+                    <div class="gallery-overlay">
+                        <h4>Digital Symphony</h4>
+                        <p>AI Music Visualization</p>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in stagger-6" data-category="weddings photography">
+                    <img src="/api/placeholder/400/300" alt="Wedding Album Design">
+                    <div class="gallery-overlay">
+                        <h4>Love Stories</h4>
+                        <p>Custom Album Design</p>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in stagger-1" data-category="commercial videos">
+                    <img src="/api/placeholder/400/300" alt="Advertisement Video">
+                    <div class="gallery-overlay">
+                        <h4>Brand Impact</h4>
+                        <p>Television Commercial</p>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in stagger-2" data-category="photography">
+                    <img src="/api/placeholder/400/300" alt="Portrait Photography">
+                    <div class="gallery-overlay">
+                        <h4>Portrait Mastery</h4>
+                        <p>Executive Headshots</p>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in stagger-3" data-category="ai commercial">
+                    <img src="/api/placeholder/400/300" alt="AI Brand Content">
+                    <div class="gallery-overlay">
+                        <h4>Innovation Hub</h4>
+                        <p>AI Brand Experience</p>
+                        <a href="#" class="view-btn">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text slide-left">
+                    <h2>About Celestia Media Hub</h2>
+                    <p>We are a premier media production company dedicated to creating extraordinary visual experiences. With years of expertise in video production, photography, and digital innovation, we transform ideas into compelling stories that resonate with audiences.</p>
+                    <p>Our team combines artistic vision with cutting-edge technology, including AI-powered video creation, to deliver results that exceed expectations. From intimate wedding moments to large-scale commercial campaigns, we approach every project with the same level of passion and professionalism.</p>
+                    <p>At Celestia Media Hub, we believe that every brand has a unique story worth telling, and we're here to help you tell yours in the most captivating way possible.</p>
+                </div>
+                <div class="about-image slide-right pulse-animation">
+                    <img src="https://images.unsplash.com/photo-1581093588401-7dc8003b2005?auto=format&fit=crop&w=800&q=80" alt="Our Studio">
+
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2 style="color: white;">Let's Create Something Amazing</h2>
+                <p style="color: rgba(255,255,255,0.9);">Ready to bring your vision to life? Get in touch with our team and let's discuss your next project.</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info fade-in">
+                    <h3>Get In Touch</h3>
+                    <div class="contact-item">
+                        <i>📧</i>
+                        <span>hello@celestiamediahub.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i>📞</i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                    <div class="contact-item">
+                        <i>📍</i>
+                        <span>123 Creative District, Media City</span>
+                    </div>
+                    <div class="contact-item">
+                        <i>🌐</i>
+                        <span>www.celestiamediahub.com</span>
+                    </div>
+                </div>
+                <div class="contact-form fade-in">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Celestia Media Hub. All rights reserved. Crafted with passion for visual excellence.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced JavaScript with modern animations and interactions
+        
+        // Navbar scroll effect with active link highlighting
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            // Update active navigation link
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links with easing
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const targetPosition = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced intersection observer with multiple animation types
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-left, .slide-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Gallery filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filterValue = this.getAttribute('data-filter');
+                
+                galleryItems.forEach(item => {
+                    const itemCategories = item.getAttribute('data-category');
+                    
+                    if (filterValue === 'all' || itemCategories.includes(filterValue)) {
+                        item.style.display = 'block';
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        
+                        setTimeout(() => {
+                            item.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 100);
+                    } else {
+                        item.style.transition = 'all 0.3s ease';
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Enhanced service card interactions
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+                this.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                
+                const icon = this.querySelector('.service-icon');
+                icon.style.transform = 'scale(1.1) rotateY(180deg)';
+                icon.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                
+                const icon = this.querySelector('.service-icon');
+                icon.style.transform = 'scale(1) rotateY(0deg)';
+            });
+        });
+
+        // Portfolio items enhanced hover effects
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.08) rotateY(5deg)';
+                this.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotateY(0deg)';
+            });
+        });
+
+        // Form submission with animation
+        document.querySelector('.contact-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            // Loading animation
+            submitBtn.textContent = 'Sending...';
+            submitBtn.style.background = 'rgba(255, 255, 255, 0.1)';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                submitBtn.textContent = 'Message Sent!';
+                submitBtn.style.background = 'rgba(76, 175, 80, 0.3)';
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+                    submitBtn.disabled = false;
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const heroContent = document.querySelector('.hero-content');
+            
+            if (hero && scrolled < hero.offsetHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+                heroContent.style.opacity = 1 - (scrolled / hero.offsetHeight);
+            }
+        });
+
+        // Loading animation for images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.opacity = '0';
+                this.style.transform = 'scale(1.1)';
+                this.style.transition = 'all 0.5s ease';
+                
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                    this.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+
+        // CTA button pulse effect
+        const ctaButton = document.querySelector('.cta-button');
+        if (ctaButton) {
+            setInterval(() => {
+                ctaButton.style.animation = 'pulse 2s ease-in-out';
+                setTimeout(() => {
+                    ctaButton.style.animation = '';
+                }, 2000);
+            }, 8000);
+        }
+
+        // Mobile menu functionality (if needed)
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenu) {
+            mobileMenu.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                this.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+            });
+        }
+
+        // Typing effect for hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect when page loads
+        window.addEventListener('load', function() {
+            const heroTitle = document.querySelector('.hero h1');
+            if (heroTitle) {
+                const originalText = heroTitle.textContent;
+                setTimeout(() => {
+                    typeWriter(heroTitle, originalText, 150);
+                }, 500);
+            }
+        });
+
+        // Add cursor effect to follow mouse
+        document.addEventListener('mousemove', function(e) {
+            const cursor = document.querySelector('.custom-cursor');
+            if (!cursor) {
+                const newCursor = document.createElement('div');
+                newCursor.className = 'custom-cursor';
+                newCursor.style.cssText = `
+                    position: fixed;
+                    width: 20px;
+                    height: 20px;
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    transition: all 0.1s ease;
+                    opacity: 0.7;
+                `;
+                document.body.appendChild(newCursor);
+            }
+            
+            const cursorElement = document.querySelector('.custom-cursor');
+            cursorElement.style.left = e.clientX - 10 + 'px';
+            cursorElement.style.top = e.clientY - 10 + 'px';
+        });
+
+        // Hide cursor when leaving window
+        document.addEventListener('mouseleave', function() {
+            const cursor = document.querySelector('.custom-cursor');
+            if (cursor) {
+                cursor.style.opacity = '0';
+            }
+        });
+
+        document.addEventListener('mouseenter', function() {
+            const cursor = document.querySelector('.custom-cursor');
+            if (cursor) {
+                cursor.style.opacity = '0.7';
+            }
+        });
+    </script>
+</body>
+</html>
